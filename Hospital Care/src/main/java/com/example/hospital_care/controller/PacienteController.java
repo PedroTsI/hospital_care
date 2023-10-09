@@ -1,13 +1,12 @@
 package com.example.hospital_care.controller;
 
 import com.example.hospital_care.model.Medico;
+import com.example.hospital_care.model.Paciente;
 import com.example.hospital_care.repository.MedicoRepository;
 import com.example.hospital_care.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +23,29 @@ public class PacienteController {
     @GetMapping
     public List<Medico> getMedicos(){
         return medicoRepository.findAll();
+    }
+
+    @PostMapping
+    public Paciente postMedico(@RequestBody Paciente paciente) {
+        return pacienteRepository.save(paciente);
+    }
+
+    @GetMapping("/{id}")
+    public Paciente getPacienteById(@PathVariable int id) {
+        return pacienteRepository.findById(id).get();
+    }
+
+    @PutMapping("/{id}")
+    public Paciente putPaciente(@PathVariable int id, @RequestBody Paciente paciente) {
+        Paciente pacienteDoBanco = pacienteRepository.findById(id).get();
+        pacienteDoBanco.setName(paciente.getName());
+        pacienteDoBanco.setAnamnese(paciente.getAnamnese());
+        return pacienteRepository.save(pacienteDoBanco);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePaciente(@PathVariable int id) {
+        pacienteRepository.deleteById(id);
     }
 
 }

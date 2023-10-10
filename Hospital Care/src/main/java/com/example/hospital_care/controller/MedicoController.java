@@ -21,6 +21,11 @@ public class MedicoController {
     private PacienteRepository pacienteRepository;
 
     @GetMapping
+    public List<Medico> getMedicos(){
+        return medicoRepository.findAll();
+    }
+
+    @GetMapping("/pacientes")
     public List<Paciente> getPacientes(){
         return pacienteRepository.findAll();
     }

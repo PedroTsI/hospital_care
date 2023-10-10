@@ -19,9 +19,14 @@ public class PacienteController {
     @Autowired
     PacienteRepository pacienteRepository;
 
-    @GetMapping
+    @GetMapping("/medico")
     public List<Medico> getMedicos(){
         return medicoRepository.findAll();
+    }
+
+    @GetMapping
+    public List<Paciente> getPacientes(){
+        return pacienteRepository.findAll();
     }
 
     @PostMapping

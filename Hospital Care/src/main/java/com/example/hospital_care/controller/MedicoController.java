@@ -5,13 +5,11 @@ import com.example.hospital_care.model.Paciente;
 import com.example.hospital_care.repository.MedicoRepository;
 import com.example.hospital_care.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
-@Controller
+@RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/medico")
 public class MedicoController {

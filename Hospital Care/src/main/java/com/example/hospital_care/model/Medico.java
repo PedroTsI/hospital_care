@@ -55,4 +55,12 @@ public class Medico {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+    public Medico(String name, String crm, String sexo, String especialidade, String telefone) {
+        this.name = name;
+        this.crm = crm;
+        this.sexo = sexo;
+        this.especialidade = especialidade;
+        this.telefone = telefone;
+    }
 }

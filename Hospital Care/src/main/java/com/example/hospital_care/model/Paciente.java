@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -22,6 +24,24 @@ public class Paciente {
     @NotBlank(message = "Campo Obrigatorio!")
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Getter
+    private String telefone;
+
+    @Getter
+    private String sexo;
+
+    @Getter
+    private String cpf;
+
+    @Getter
+    private Date data_de_nascimento;
+
+    @Getter
+    private String email;
+
+    @Getter
+    private String prontuario;
 
     @Getter
     private String anamnese;

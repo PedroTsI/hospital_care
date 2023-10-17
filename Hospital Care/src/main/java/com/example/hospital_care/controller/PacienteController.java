@@ -44,6 +44,12 @@ public class PacienteController {
         Paciente pacienteDoBanco = pacienteRepository.findById(id).get();
         pacienteDoBanco.setName(paciente.getName());
         pacienteDoBanco.setAnamnese(paciente.getAnamnese());
+        pacienteDoBanco.setCpf(paciente.getCpf());
+        pacienteDoBanco.setData_de_nascimento(paciente.getData_de_nascimento());
+        pacienteDoBanco.setEmail(paciente.getEmail());
+        pacienteDoBanco.setProntuario(paciente.getProntuario());
+        pacienteDoBanco.setSexo(paciente.getSexo());
+        pacienteDoBanco.setTelefone(paciente.getTelefone());
         return pacienteRepository.save(pacienteDoBanco);
     }
 

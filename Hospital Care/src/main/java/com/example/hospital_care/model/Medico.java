@@ -37,10 +37,16 @@ public class Medico {
     private String telefone;
 
     public void setName(String name) {
+        if(name.isBlank())
+            throw new IllegalArgumentException("Nome nao pode ser vazio!");
         this.name = name;
     }
 
     public void setCrm(String crm) {
+        if(crm.length() != 7)
+            throw new IllegalArgumentException("CRM deve conter 7 digitos!");
+        if(crm.isBlank())
+            throw new IllegalArgumentException("CRM nao pode ser vazio!");    
         this.crm = crm;
     }
 

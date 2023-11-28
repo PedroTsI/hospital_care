@@ -2,9 +2,13 @@ package com.example.hospital_care.controller;
 
 import com.example.hospital_care.model.Medico;
 import com.example.hospital_care.model.Paciente;
+import com.example.hospital_care.rabbitmq.Producer;
 import com.example.hospital_care.repository.MedicoRepository;
 import com.example.hospital_care.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +16,10 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/medico")
-public class MedicoController {
+public class MedicoController{
+
+    @Autowired
+    private Producer producer;
 
     @Autowired
     private MedicoRepository medicoRepository;
@@ -20,6 +27,7 @@ public class MedicoController {
     @Autowired
     private PacienteRepository pacienteRepository;
 
+    @Cacheable(value = "medicos")
     @GetMapping
     public List<Medico> getMedicos(){
         return medicoRepository.findAll();
@@ -29,6 +37,12 @@ public class MedicoController {
     public List<Paciente> getPacientes(){
         return pacienteRepository.findAll();
     }
+
+    @Caching(
+                evict = {
+                        @CacheEvict(value = "medicos", allEntries = true)
+                    }
+    )
 
     @PostMapping
     public Medico postMedico(@RequestBody Medico medico) {
@@ -54,6 +68,18 @@ public class MedicoController {
     @DeleteMapping("/{id}")
     public void deleteMedico(@PathVariable int id) {
         medicoRepository.deleteById(id);
+    }
+
+    @GetMapping("/paciente/{id}")
+    public void consultarPaciente(@PathVariable int id) {
+        Paciente paciente = pacienteRepository.findById(id).get();
+        System.out.println(paciente.getName());
+        try {
+            String message = "O paciente " + " " + paciente.getName() +" " + " Foi consultado"; 
+            producer.message(message);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 }
 
